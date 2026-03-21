@@ -12,7 +12,7 @@ Um sistema completo (Frontend Moderno + API Python) para análise heurística, e
 * **Dashboard Premium (`frontend/`)**: Interface fluida, moderna e limpa (aplique Padrão, Fixe dezenas ou Exclua).
 * **Validação Ao Vivo**: A cada clique nas dezenas, o painel à direita é atualizado na hora para comparar seu jogo contra as estatísticas de ouro da Lotofácil (Ímpares, Pares, Repetidas, Moldura, Primos, Múltiplos de 3, Fibonacci e Soma 180-210).
 * **Motor de Geração Heurística**: Diferente da 'Surpresinha', o botão "Gerar Jogo" testa recursivamente (até 50.000 iterações em milissegundos) milhares de combinações de jogos até achar 15 números que tirem "Nota 10" em todas as estatísticas matemáticas. Ele sempre tentará respeitar as dezenas que você marcou como "*Fixas*".
-* **Sincronização Automática (`server.py`)**: O backend integrado em Flask se comunica com a API pública brasileira em tempo real para buscar os dados de "ontem" do sorteio (vital para o cálculo de jogos *Repetidos* do prêmio anterior).
+* **Sincronização Automática (`app.py`)**: O backend integrado em Flask se comunica com a API pública brasileira em tempo real para buscar os dados de "ontem" do sorteio (vital para o cálculo de jogos *Repetidos* do prêmio anterior).
 
 ## 🚀 Como instalar na sua máquina local
 
@@ -29,7 +29,7 @@ Um sistema completo (Frontend Moderno + API Python) para análise heurística, e
 
 3. **Suba o Servidor (Backend):**
    ```bash
-   python server.py
+   python app.py
    ```
 
 4. **Abra o sistema:**
@@ -39,7 +39,7 @@ Um sistema completo (Frontend Moderno + API Python) para análise heurística, e
 1. Faça login via GitHub no **[Render.com](https://render.com/)**.
 2. Clique em **New -> Web Service** e vincule este repositório `analyzer`.
 3. Em *Build Command* preencha: `pip install -r requirements.txt`
-4. Em *Start Command* preencha: `gunicorn server:app`
+4. Em *Start Command* preencha: `gunicorn app:app`
 5. Aguarde o *deploy* (cerca de 2 minutinhos) e você ganhará um link público `.onrender.com` grátis para acessar pelo celular de todos seus amigos!
 
 ---
