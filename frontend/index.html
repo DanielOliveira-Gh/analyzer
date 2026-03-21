@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lotofácil Analyzer UI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Esquerda: Cartela -->
+        <main class="left-panel">
+            <header class="panel-header">
+                <button class="btn btn-purple" id="btn-generate">
+                    <span class="icon">🔄</span> Gerar Jogo
+                </button>
+                <button class="btn btn-green" id="btn-select">
+                    <span class="icon">🔖</span> Selecionar Jogo
+                </button>
+            </header>
+
+            <div class="toggle-container">
+                <label class="switch">
+                    <input type="checkbox" id="toggle-params">
+                    <span class="slider round"></span>
+                </label>
+                <span class="toggle-label">Ocultar Parâmetros</span>
+            </div>
+
+            <div class="mode-selector">
+                <button class="mode-btn active" data-mode="padrao">PADRÃO</button>
+                <button class="mode-btn" data-mode="fixar">FIXAR</button>
+                <button class="mode-btn" data-mode="excluir">EXCLUIR</button>
+            </div>
+
+            <div class="board" id="board">
+                <!-- Javascript will inject 25 numbers here -->
+            </div>
+
+            <div class="summary-cards">
+                <div class="card card-padrao">
+                    <span class="card-title">Dezenas:</span>
+                    <strong class="card-value" id="count-padrao">0</strong>
+                    <button class="btn-trash" onclick="clearMode('padrao')">🗑️</button>
+                </div>
+                <div class="card card-fixar">
+                    <span class="card-title">Fixas:</span>
+                    <strong class="card-value" id="count-fixar">0</strong>
+                    <button class="btn-trash" onclick="clearMode('fixar')">🗑️</button>
+                </div>
+                <div class="card card-excluir">
+                    <span class="card-title">Excluídas:</span>
+                    <strong class="card-value" id="count-excluir">0</strong>
+                    <button class="btn-trash" onclick="clearMode('excluir')">🗑️</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Direita: Parâmetros -->
+        <aside class="right-panel" id="params-panel">
+            <h2 class="params-title">Parâmetros do Jogo</h2>
+            <div class="table-container">
+                <table class="params-table">
+                    <thead>
+                        <tr>
+                            <th>Parâmetro</th>
+                            <th>Qtd</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="params-tbody">
+                        <!-- Rows dynamically generated -->
+                    </tbody>
+                </table>
+            </div>
+        </aside>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
