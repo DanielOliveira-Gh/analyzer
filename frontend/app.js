@@ -154,14 +154,14 @@ function updateParamsTable(activeNumbers) {
     const isFull = activeNumbers.length === 15;
 
     const params = [
-        { label: 'Ímpares', val: impares, ideal: impares >= 7 && impares <= 9 },
-        { label: 'Pares', val: pares, ideal: pares >= 6 && pares <= 8 },
+        { label: 'Ímpares', val: impares, ideal: impares >= 7 && impares <= 8 },
+        { label: 'Pares', val: pares, ideal: pares >= 7 && pares <= 8 },
         { label: 'Repetidas', val: repetidas, ideal: repetidas >= 8 && repetidas <= 10 },
-        { label: 'Moldura', val: moldura, ideal: moldura >= 9 && moldura <= 11 },
-        { label: 'Primos', val: primos, ideal: primos >= 4 && primos <= 6 },
-        { label: 'Múltiplos de 3', val: multiplos, ideal: multiplos >= 4 && multiplos <= 6 },
-        { label: 'Fibonaccis', val: fibo, ideal: fibo >= 3 && fibo <= 5 },
-        { label: 'Soma', val: soma, ideal: soma >= 180 && soma <= 210 }
+        { label: 'Moldura', val: moldura, ideal: moldura >= 9 && moldura <= 10 },
+        { label: 'Primos', val: primos, ideal: primos >= 5 && primos <= 6 },
+        { label: 'Múltiplos de 3', val: multiplos, ideal: multiplos >= 4 && multiplos <= 5 },
+        { label: 'Fibonaccis', val: fibo, ideal: fibo >= 4 && fibo <= 5 },
+        { label: 'Soma', val: soma, ideal: soma >= 195 && soma <= 209 }
     ];
 
     tbody.innerHTML = '';
@@ -276,14 +276,14 @@ function evaluateGame(cand) {
     });
 
     let score = 0;
-    if (impares >= 7 && impares <= 9) score++;
-    if (pares >= 6 && pares <= 8) score++;
+    if (impares >= 7 && impares <= 8) score++;
+    if (pares >= 7 && pares <= 8) score++;
     if (repetidas >= 8 && repetidas <= 10) score++;
-    if (moldura >= 9 && moldura <= 11) score++;
-    if (primos >= 4 && primos <= 6) score++;
-    if (multiplos >= 4 && multiplos <= 6) score++;
-    if (fibo >= 3 && fibo <= 5) score++;
-    if (soma >= 180 && soma <= 210) score++;
+    if (moldura >= 9 && moldura <= 10) score++;
+    if (primos >= 5 && primos <= 6) score++;
+    if (multiplos >= 4 && multiplos <= 5) score++;
+    if (fibo >= 4 && fibo <= 5) score++;
+    if (soma >= 195 && soma <= 209) score++;
     return score;
 }
 
