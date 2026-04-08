@@ -18,6 +18,9 @@
                 <button class="btn btn-green" id="btn-select">
                     <span class="icon">🔖</span> Selecionar Jogo
                 </button>
+                <button class="btn btn-red" id="btn-clear-all">
+                    <span class="icon">🗑️</span> Limpar Jogo
+                </button>
             </header>
 
             <div class="toggle-container">
@@ -32,6 +35,11 @@
                 <button class="mode-btn active" data-mode="padrao">PADRÃO</button>
                 <button class="mode-btn" data-mode="fixar">FIXAR</button>
                 <button class="mode-btn" data-mode="excluir">EXCLUIR</button>
+            </div>
+
+            <div class="latest-draw" id="latest-draw-container" style="display: none;">
+                <span class="latest-draw-title" id="latest-draw-title">Último Concurso: -</span>
+                <div class="latest-draw-numbers" id="latest-draw-numbers"></div>
             </div>
 
             <div class="board" id="board">

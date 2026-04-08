@@ -27,6 +27,25 @@ async function init() {
         if (data && data.dezenas) {
             ULTIMO_JOGO = data.dezenas;
             console.log(`Opa! Último concurso (${data.concurso}) carregado. Fonte: ${data.source}`);
+            
+            // Popula na UI
+            const container = document.getElementById('latest-draw-container');
+            const title = document.getElementById('latest-draw-title');
+            const numbersContainer = document.getElementById('latest-draw-numbers');
+            
+            if (container && title && numbersContainer) {
+                container.style.display = 'flex';
+                title.innerText = `Último Concurso (${data.concurso})`;
+                
+                numbersContainer.innerHTML = '';
+                const sorted = [...ULTIMO_JOGO].sort((a, b) => a - b);
+                sorted.forEach(num => {
+                    const span = document.createElement('span');
+                    span.className = 'latest-draw-num';
+                    span.innerText = num.toString().padStart(2, '0');
+                    numbersContainer.appendChild(span);
+                });
+            }
         }
     } catch(err) {
         console.warn('Aviso: Backend inativo ou erro de rede. Usando jogo de segurança.');
@@ -34,6 +53,11 @@ async function init() {
     }
 
     document.getElementById('btn-generate').addEventListener('click', generateGame);
+    
+    const btnClearAll = document.getElementById('btn-clear-all');
+    if (btnClearAll) {
+        btnClearAll.addEventListener('click', clearAll);
+    }
 
     // 2. Render Board
     for (let i = 1; i <= 25; i++) {
@@ -88,6 +112,14 @@ window.clearMode = function(modeToRemove) {
         if(numbersState[i] === modeToRemove) {
             numbersState[i] = 'none';
         }
+    }
+    updateUI();
+}
+
+// Botão Limpar Tudo
+window.clearAll = function() {
+    for(let i=1; i<=25; i++) {
+        numbersState[i] = 'none';
     }
     updateUI();
 }
