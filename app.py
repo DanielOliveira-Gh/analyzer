@@ -45,8 +45,9 @@ def get_latest():
     })
 
 if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 5000))
     print("====================================")
     print("🚀 Servidor Python Lotofácil ON!")
     print("====================================")
-    print("Acesse no navegador: http://127.0.0.1:5000")
-    app.run(host='127.0.0.1', port=5000, debug=False)
+    print(f"Acesse no navegador: http://0.0.0.0:{port}")
+    app.run(host='0.0.0.0', port=port, debug=False)
