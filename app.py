@@ -19,25 +19,9 @@ def serve_static(path):
 @app.route('/api/latest')
 def get_latest():
     """
-    Busca o último concurso em uma API real e repassa ao frontend.
-    Caso a API falhe, faz o fallback para o nosso CSV local.
+    Busca o último concurso a partir do nosso arquivo CSV local (resultados.csv).
     """
-    try:
-        # Acesso em tempo real na API oficial da CAIXA
-        headers = {"User-Agent": "Mozilla/5.0"}
-        resp = requests.get(API_URL, headers=headers, timeout=10)
-        if resp.status_code == 200:
-            data = resp.json()
-            dezenas_int = [int(d) for d in data.get('listaDezenas', [])]
-            return jsonify({
-                "source": "api_oficial_caixa",
-                "concurso": data.get("numero"),
-                "dezenas": dezenas_int
-            })
-    except Exception as e:
-        print(f"Aviso - Erro na API real: {e}")
-        
-    # BACKUP: Tentar ler do arquivo local CSV
+    # 1. Tentar ler do arquivo local CSV PRIMEIRO
     try:
         from data_loader import carregar_resultados
         base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -51,9 +35,9 @@ def get_latest():
                  "dezenas": ultimo['dezenas']
              })
     except Exception as e:
-        print(f"Erro de fallback local: {e}")
+        print(f"Erro ao ler CSV local: {e}")
 
-    # Fallback extremo para nunca quebrar a UI
+    # Fallback extremo
     return jsonify({
         "source": "hardcode",
         "concurso": 0,

@@ -22,7 +22,8 @@ const paramsPanel = document.getElementById('params-panel');
 async function init() {
     // 1. Fetch Real Time Data
     try {
-        const resp = await fetch('/api/latest');
+        const timestamp = new Date().getTime();
+        const resp = await fetch(`/api/latest?t=${timestamp}`);
         const data = await resp.json();
         if (data && data.dezenas) {
             ULTIMO_JOGO = data.dezenas;
@@ -57,6 +58,11 @@ async function init() {
     const btnClearAll = document.getElementById('btn-clear-all');
     if (btnClearAll) {
         btnClearAll.addEventListener('click', clearAll);
+    }
+    
+    const btnSelect = document.getElementById('btn-select');
+    if (btnSelect) {
+        btnSelect.addEventListener('click', selectLastDraw);
     }
 
     // 2. Render Board
@@ -121,6 +127,23 @@ window.clearAll = function() {
     for(let i=1; i<=25; i++) {
         numbersState[i] = 'none';
     }
+    updateUI();
+}
+
+// Botão Selecionar Último Jogo
+window.selectLastDraw = function() {
+    if (ULTIMO_JOGO.length === 0) return;
+    
+    // Limpa estado atual
+    for(let i=1; i<=25; i++) {
+        numbersState[i] = 'none';
+    }
+    
+    // Marca dezenas do último jogo
+    ULTIMO_JOGO.forEach(num => {
+        numbersState[num] = 'padrao';
+    });
+    
     updateUI();
 }
 
