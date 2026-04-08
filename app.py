@@ -5,7 +5,8 @@ import os
 app = Flask(__name__, static_folder='frontend')
 
 # API gratuita para sorteios da Lotofácil
-API_URL = "https://loteriascaixa-api.herokuapp.com/api/lotofacil/latest"
+# API gratuita para sorteios da Lotofácil
+API_URL = "https://servicebus2.caixa.gov.br/portaldeloterias/api/lotofacil/"
 
 @app.route('/')
 def index():
@@ -22,15 +23,15 @@ def get_latest():
     Caso a API falhe, faz o fallback para o nosso CSV local.
     """
     try:
-        # Acesso em tempo real
-        resp = requests.get(API_URL, timeout=5)
+        # Acesso em tempo real na API oficial da CAIXA
+        headers = {"User-Agent": "Mozilla/5.0"}
+        resp = requests.get(API_URL, headers=headers, timeout=10)
         if resp.status_code == 200:
             data = resp.json()
-            # As dezenas costumam vir como strings ["01", "04"...]
-            dezenas_int = [int(d) for d in data.get('dezenas', [])]
+            dezenas_int = [int(d) for d in data.get('listaDezenas', [])]
             return jsonify({
-                "source": "api_externa",
-                "concurso": data.get("concurso"),
+                "source": "api_oficial_caixa",
+                "concurso": data.get("numero"),
                 "dezenas": dezenas_int
             })
     except Exception as e:
