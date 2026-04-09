@@ -1,5 +1,5 @@
 import os
-from data_loader import carregar_resultados
+from data_loader import carregar_resultados, update_resultados_csv
 from analyzer import analisar_jogos
 
 def main():
@@ -12,6 +12,8 @@ def main():
     csv_path = os.path.join(base_dir, 'resultados.csv')
     
     print(f"Procurando dados em: {csv_path}")
+    print("Verificando se há resultados recentes para atualizar...")
+    update_resultados_csv(csv_path)
     
     jogos = carregar_resultados(csv_path)
     

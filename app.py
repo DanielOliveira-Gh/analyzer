@@ -23,9 +23,16 @@ def get_latest():
     """
     # 1. Tentar ler do arquivo local CSV PRIMEIRO
     try:
-        from data_loader import carregar_resultados
+        from data_loader import carregar_resultados, update_resultados_csv
         base_dir = os.path.dirname(os.path.abspath(__file__))
         csv_path = os.path.join(base_dir, 'resultados.csv')
+        
+        # Atualiza o CSV com até os 3 últimos resultados da API
+        try:
+            update_resultados_csv(csv_path, num_resultados=3)
+        except Exception as e:
+            print(f"Aviso na atualização automática: {e}")
+
         jogos = carregar_resultados(csv_path)
         if jogos:
              ultimo = max(jogos, key=lambda j: j['concurso'])
