@@ -342,5 +342,12 @@ function evaluateGame(cand) {
     return score;
 }
 
+// Timer de atualização automática (20 horas)
+const VINTE_HORAS_EM_MS = 20 * 60 * 60 * 1000;
+setInterval(() => {
+    console.log("Iniciando atualização periódica (20h)...");
+    init();
+}, VINTE_HORAS_EM_MS);
+
 // Start
 init();

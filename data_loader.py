@@ -15,22 +15,33 @@ def update_resultados_csv(filepath, num_resultados=3):
             ultimo_concurso_api = data['numero']
         
         concursos_existentes = set()
+        max_concurso_local = 0
         if os.path.exists(filepath):
             with open(filepath, mode='r', encoding='utf-8') as f:
                 reader = csv.DictReader(f)
                 for row in reader:
                     if row.get('Concurso'):
-                        concursos_existentes.add(int(row['Concurso']))
+                        c = int(row['Concurso'])
+                        concursos_existentes.add(c)
+                        if c > max_concurso_local:
+                            max_concurso_local = c
         else:
             with open(filepath, mode='w', encoding='utf-8', newline='') as f:
                 writer = csv.writer(f)
                 writer.writerow(['Concurso'] + [f'Bola{i}' for i in range(1, 16)])
 
         concursos_para_buscar = []
-        for i in range(num_resultados):
-            concurso = ultimo_concurso_api - i
-            if concurso > 0 and concurso not in concursos_existentes:
-                concursos_para_buscar.append(concurso)
+        if max_concurso_local > 0:
+            # Baixa todos os concursos que faltam desde o último que temos até o último da API
+            for concurso in range(max_concurso_local + 1, ultimo_concurso_api + 1):
+                if concurso not in concursos_existentes:
+                    concursos_para_buscar.append(concurso)
+        else:
+            # Se não tivermos nenhum, pega os últimos num_resultados
+            for i in range(num_resultados):
+                concurso = ultimo_concurso_api - i
+                if concurso > 0 and concurso not in concursos_existentes:
+                    concursos_para_buscar.append(concurso)
         
         concursos_para_buscar.sort()
         
