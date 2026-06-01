@@ -55,4 +55,4 @@ def analisar_jogos(jogos):
     
     # Dica baseada na soma
     soma = calcular_soma(ultimo_jogo)
-    print("  Curiosidade: A maioria das somas vencedoras fica entre 195 e 209.")
+    print("  Curiosidade: A maioria das somas vencedoras fica entre 175 e 200.")

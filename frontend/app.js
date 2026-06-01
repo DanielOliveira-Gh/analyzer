@@ -216,7 +216,7 @@ function updateParamsTable(activeNumbers) {
         { label: 'Primos', val: primos, ideal: primos >= 5 && primos <= 6 },
         { label: 'Múltiplos de 3', val: multiplos, ideal: multiplos >= 4 && multiplos <= 5 },
         { label: 'Fibonaccis', val: fibo, ideal: fibo >= 4 && fibo <= 5 },
-        { label: 'Soma', val: soma, ideal: soma >= 195 && soma <= 209 }
+        { label: 'Soma', val: soma, ideal: soma >= 175 && soma <= 200 }
     ];
 
     tbody.innerHTML = '';
@@ -338,7 +338,7 @@ function evaluateGame(cand) {
     if (primos >= 5 && primos <= 6) score++;
     if (multiplos >= 4 && multiplos <= 5) score++;
     if (fibo >= 4 && fibo <= 5) score++;
-    if (soma >= 195 && soma <= 209) score++;
+    if (soma >= 175 && soma <= 200) score++;
     return score;
 }
 

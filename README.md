@@ -10,7 +10,7 @@ Um sistema completo (Frontend Moderno + API Python) para análise heurística, e
 
 ## ✨ Funcionalidades Principais
 * **Dashboard Premium (`frontend/`)**: Interface fluida, moderna e limpa (aplique Padrão, Fixe dezenas ou Exclua).
-* **Validação Ao Vivo**: A cada clique nas dezenas, o painel à direita é atualizado na hora para comparar seu jogo contra as estatísticas de ouro da Lotofácil (Ímpares, Pares, Repetidas, Moldura, Primos, Múltiplos de 3, Fibonacci e Soma 180-210).
+* **Validação Ao Vivo**: A cada clique nas dezenas, o painel à direita é atualizado na hora para comparar seu jogo contra as estatísticas de ouro da Lotofácil (Ímpares, Pares, Repetidas, Moldura, Primos, Múltiplos de 3, Fibonacci e Soma 175-200).
 * **Motor de Geração Heurística**: Diferente da 'Surpresinha', o botão "Gerar Jogo" testa recursivamente (até 50.000 iterações em milissegundos) milhares de combinações de jogos até achar 15 números que tirem "Nota 10" em todas as estatísticas matemáticas. Ele sempre tentará respeitar as dezenas que você marcou como "*Fixas*".
 * **Sincronização Automática (`app.py`)**: O backend integrado em Flask se comunica com a API pública brasileira em tempo real para buscar os dados de "ontem" do sorteio (vital para o cálculo de jogos *Repetidos* do prêmio anterior).
 
