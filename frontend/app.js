@@ -1,8 +1,8 @@
 // Constantes da Lotofácil
-const MOLDURA = [1,2,3,4,5,6,10,11,15,16,20,21,22,23,24,25];
-const PRIMOS = [2,3,5,7,11,13,17,19,23];
-const MULTIPLOS_3 = [3,6,9,12,15,18,21,24];
-const FIBONACCI = [1,2,3,5,8,13,21];
+const MOLDURA = [1, 2, 3, 4, 5, 6, 10, 11, 15, 16, 20, 21, 22, 23, 24, 25];
+const PRIMOS = [2, 3, 5, 7, 11, 13, 17, 19, 23];
+const MULTIPLOS_3 = [3, 6, 9, 12, 15, 18, 21, 24];
+const FIBONACCI = [1, 2, 3, 5, 8, 13, 21];
 
 // O Jogo anterior será carregado em tempo real do backend via Fetch API
 let ULTIMO_JOGO = [];
@@ -28,16 +28,16 @@ async function init() {
         if (data && data.dezenas) {
             ULTIMO_JOGO = data.dezenas;
             console.log(`Opa! Último concurso (${data.concurso}) carregado. Fonte: ${data.source}`);
-            
+
             // Popula na UI
             const container = document.getElementById('latest-draw-container');
             const title = document.getElementById('latest-draw-title');
             const numbersContainer = document.getElementById('latest-draw-numbers');
-            
+
             if (container && title && numbersContainer) {
                 container.style.display = 'flex';
                 title.innerText = `Último Concurso (${data.concurso})`;
-                
+
                 numbersContainer.innerHTML = '';
                 const sorted = [...ULTIMO_JOGO].sort((a, b) => a - b);
                 sorted.forEach(num => {
@@ -48,18 +48,18 @@ async function init() {
                 });
             }
         }
-    } catch(err) {
+    } catch (err) {
         console.warn('Aviso: Backend inativo ou erro de rede. Usando jogo de segurança.');
-        ULTIMO_JOGO = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]; 
+        ULTIMO_JOGO = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
     }
 
     document.getElementById('btn-generate').addEventListener('click', generateGame);
-    
+
     const btnClearAll = document.getElementById('btn-clear-all');
     if (btnClearAll) {
         btnClearAll.addEventListener('click', clearAll);
     }
-    
+
     const btnSelect = document.getElementById('btn-select');
     if (btnSelect) {
         btnSelect.addEventListener('click', selectLastDraw);
@@ -68,12 +68,12 @@ async function init() {
     // 2. Render Board
     for (let i = 1; i <= 25; i++) {
         numbersState[i] = 'none';
-        
+
         const btn = document.createElement('button');
         btn.className = 'number-btn';
         btn.innerText = i.toString().padStart(2, '0');
         btn.onclick = () => toggleNumber(i);
-        
+
         // Indicadores (Opcional, inspirado na imagem: M=Moldura, P=Primo, F=Fib)
         if (MOLDURA.includes(i)) {
             let ind = document.createElement('span');
@@ -113,9 +113,9 @@ toggleParams.addEventListener('change', (e) => {
 });
 
 // Botão Lixeira
-window.clearMode = function(modeToRemove) {
-    for(let i=1; i<=25; i++){
-        if(numbersState[i] === modeToRemove) {
+window.clearMode = function (modeToRemove) {
+    for (let i = 1; i <= 25; i++) {
+        if (numbersState[i] === modeToRemove) {
             numbersState[i] = 'none';
         }
     }
@@ -123,27 +123,27 @@ window.clearMode = function(modeToRemove) {
 }
 
 // Botão Limpar Tudo
-window.clearAll = function() {
-    for(let i=1; i<=25; i++) {
+window.clearAll = function () {
+    for (let i = 1; i <= 25; i++) {
         numbersState[i] = 'none';
     }
     updateUI();
 }
 
 // Botão Selecionar Último Jogo
-window.selectLastDraw = function() {
+window.selectLastDraw = function () {
     if (ULTIMO_JOGO.length === 0) return;
-    
+
     // Limpa estado atual
-    for(let i=1; i<=25; i++) {
+    for (let i = 1; i <= 25; i++) {
         numbersState[i] = 'none';
     }
-    
+
     // Marca dezenas do último jogo
     ULTIMO_JOGO.forEach(num => {
         numbersState[num] = 'padrao';
     });
-    
+
     updateUI();
 }
 
@@ -161,14 +161,14 @@ function updateUI() {
     let countPadrao = 0;
     let countFixar = 0;
     let countExcluir = 0;
-    
+
     let activeNumbers = [];
 
     // Atualiza botões
     for (let i = 1; i <= 25; i++) {
         const btn = document.getElementById(`num-${i}`);
         btn.className = 'number-btn'; // reseta classes
-        
+
         if (numbersState[i] === 'padrao') {
             btn.classList.add('state-padrao');
             countPadrao++;
@@ -209,20 +209,20 @@ function updateParamsTable(activeNumbers) {
     const isFull = activeNumbers.length === 15;
 
     const params = [
-        { label: 'Ímpares', val: impares, ideal: impares >= 7 && impares <= 8 },
-        { label: 'Pares', val: pares, ideal: pares >= 7 && pares <= 8 },
+        { label: 'Ímpares', val: impares, ideal: impares >= 8 && impares <= 9 },
+        { label: 'Pares', val: pares, ideal: pares >= 6 && pares <= 7 },
         { label: 'Repetidas', val: repetidas, ideal: repetidas >= 8 && repetidas <= 10 },
         { label: 'Moldura', val: moldura, ideal: moldura >= 9 && moldura <= 10 },
         { label: 'Primos', val: primos, ideal: primos >= 5 && primos <= 6 },
         { label: 'Múltiplos de 3', val: multiplos, ideal: multiplos >= 4 && multiplos <= 5 },
-        { label: 'Fibonaccis', val: fibo, ideal: fibo >= 4 && fibo <= 5 },
+        { label: 'Fibonaccis', val: fibo, ideal: fibo >= 3 && fibo <= 4 },
         { label: 'Soma', val: soma, ideal: soma >= 175 && soma <= 200 }
     ];
 
     tbody.innerHTML = '';
     params.forEach(p => {
         const tr = document.createElement('tr');
-        
+
         let statusHtml = `<span class="status-badge">Aguardando</span>`;
         if (activeNumbers.length > 0) {
             if (isFull && p.ideal) {
@@ -230,7 +230,7 @@ function updateParamsTable(activeNumbers) {
             } else if (isFull && !p.ideal) {
                 statusHtml = `<span class="status-badge status-atencao">Atenção</span>`;
             } else {
-                 statusHtml = `<span class="status-badge">Calculando...</span>`;
+                statusHtml = `<span class="status-badge">Calculando...</span>`;
             }
         }
 
@@ -247,33 +247,33 @@ function updateParamsTable(activeNumbers) {
 function generateGame() {
     let fixas = [];
     let excluidas = [];
-    
+
     // Prepara fixas e excluidas
     for (let i = 1; i <= 25; i++) {
         if (numbersState[i] === 'fixar') fixas.push(i);
         if (numbersState[i] === 'excluir') excluidas.push(i);
     }
-    
+
     if (fixas.length > 15) {
         alert("Você selecionou mais de 15 dezenas fixas!");
         return;
     }
-    
+
     let pool = [];
     for (let i = 1; i <= 25; i++) {
         if (!fixas.includes(i) && !excluidas.includes(i)) {
             pool.push(i);
         }
     }
-    
+
     const maxAttempts = 50000;
     let attempt = 0;
     let bestGame = [];
     let bestScore = -1;
-    
+
     const btnGen = document.getElementById('btn-generate');
     btnGen.innerHTML = '<span class="icon">⏳</span> Gerando...';
-    
+
     setTimeout(() => {
         let needed = 15 - fixas.length;
         if (needed < 0 || needed > pool.length) {
@@ -282,11 +282,11 @@ function generateGame() {
             return;
         }
 
-        while(attempt < maxAttempts) {
+        while (attempt < maxAttempts) {
             attempt++;
             let shuffled = [...pool].sort(() => 0.5 - Math.random());
             let candidate = [...fixas, ...shuffled.slice(0, needed)];
-            
+
             let score = evaluateGame(candidate);
             if (score === 8) {
                 bestGame = candidate;
@@ -297,20 +297,20 @@ function generateGame() {
                 bestGame = candidate;
             }
         }
-        
+
         // Aplica o melhor jogo encontrado
         for (let i = 1; i <= 25; i++) {
             if (numbersState[i] === 'padrao') {
-               numbersState[i] = 'none';
+                numbersState[i] = 'none';
             }
         }
-        
+
         bestGame.forEach(n => {
-             if (numbersState[n] !== 'fixar') {
-                 numbersState[n] = 'padrao';
-             }
+            if (numbersState[n] !== 'fixar') {
+                numbersState[n] = 'padrao';
+            }
         });
-        
+
         updateUI();
         btnGen.innerHTML = '<span class="icon">🔄</span> Gerar Jogo';
     }, 50);
@@ -331,13 +331,13 @@ function evaluateGame(cand) {
     });
 
     let score = 0;
-    if (impares >= 7 && impares <= 8) score++;
-    if (pares >= 7 && pares <= 8) score++;
+    if (impares >= 8 && impares <= 9) score++;
+    if (pares >= 6 && pares <= 7) score++;
     if (repetidas >= 8 && repetidas <= 10) score++;
     if (moldura >= 9 && moldura <= 10) score++;
     if (primos >= 5 && primos <= 6) score++;
     if (multiplos >= 4 && multiplos <= 5) score++;
-    if (fibo >= 4 && fibo <= 5) score++;
+    if (fibo >= 3 && fibo <= 4) score++;
     if (soma >= 175 && soma <= 200) score++;
     return score;
 }
